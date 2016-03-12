@@ -1,0 +1,73 @@
+---
+- block:
+  - name: Create temporary download directory
+    shell: mktemp -d
+    register: tempdir_command_output
+
+  - name: Determine path to temporary download directory
+    set_fact:
+      confluence_download_directory: "{{ tempdir_command_output.stdout }}"
+
+  - name: Download Confluence {{ confluence_version }} archive
+    get_url:
+      url: "{{ confluence_installation_archive_url }}"
+      checksum: "{{ confluence_installation_archive_checksum }}"
+      dest: "{{ confluence_download_directory }}/atlassian-confluence-{{ confluence_version }}.tar.gz"
+
+  - name: Extract Confluence {{ confluence_version }} archive
+    unarchive:
+      src: "{{ confluence_download_directory }}/atlassian-confluence-{{ confluence_version }}.tar.gz"
+      dest: "{{ confluence_software_directory }}"
+      copy: no
+
+  - name: Stat infos about Confluence installation directory
+    stat:
+      path: "{{ confluence_installation_instance_directory }}"
+    register: confluence_installation_instance_stat
+
+  - name: Fail if Confluence installation directory does not exist
+    fail:
+      msg: "Could not find confluence install directory at {{ confluence_installation_instance_directory }}"
+    when: not confluence_installation_instance_stat.stat.exists
+
+  - name: Copy JDBC driver to Confluence application if required
+    when: confluence_installation_jdbc_driver_jar_path
+    copy:
+      remote_src: True
+      src: "{{ confluence_installation_jdbc_driver_jar_path }}"
+      dest: "{{ confluence_installation_instance_directory }}/lib/{{ confluence_installation_jdbc_driver_jar_path | basename }}"
+
+  - name: Set user/group to root and disable write access for 'group' and 'other' in Confluence installation directory
+    file:
+      state: directory
+      dest: "{{ confluence_installation_instance_directory }}"
+      owner: root
+      group: root
+      mode: go-w
+      recurse: yes
+
+  - name: Set user/group to application user and mode to 0700 for logs,temp,work in Confluence installation directory
+    file:
+      state: directory
+      dest: "{{ item }}"
+      owner: "{{ confluence_user_name }}"
+      group: root
+      mode: 0700
+    with_items:
+    - "{{ confluence_installation_instance_directory }}/logs"
+    - "{{ confluence_installation_instance_directory }}/temp"
+    - "{{ confluence_installation_instance_directory }}/work"
+
+  - name: Install init script for Confluence application
+    template:
+      src: etc/init.d/confluence.j2
+      dest: /etc/init.d/{{ confluence_service_name }}
+      owner: root
+      group: root
+      mode: 0755
+
+  always:
+  - name: Remove temporary download directory
+    file:
+      state: absent
+      dest: "{{ confluence_download_directory }}"

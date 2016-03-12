@@ -1,0 +1,49 @@
+---
+- name: Create Confluence group
+  group:
+    name: "{{ confluence_group_name }}"
+    system: yes
+
+- name: Create Confluence user
+  user:
+    name: "{{ confluence_user_name }}"
+    group: "{{ confluence_group_name }}"
+    system: yes
+    shell: /bin/bash
+
+- name: Configure limits for Confluence user
+  template:
+    src: etc/security/limits.d/confluence.conf.j2
+    dest: /etc/security/limits.d/confluence.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Create Confluence directories
+  file:
+    state: directory
+    path: "{{ item.path }}"
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  with_items:
+  - { path: "{{ confluence_config_software_directory }}", owner: root, group: root, mode: '0755' }
+  - { path: "{{ confluence_config_home_directory }}", owner: "{{ confluence_user_name }}", group: "{{ confluence_group_name }}", mode: '0700' }
+
+- name: Provide confluenceenv.sh script to simplify application administration
+  when: confluence_provide_root_environment
+  template:
+    src: root/confluenceenv.sh.j2
+    dest: /root/confluenceenv.sh
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Enable confluenceenv.sh script to simplify application administration
+  when: confluence_provide_root_environment
+  lineinfile:
+    state: present
+    dest: /root/.bash_profile
+    regexp: "(.*)confluenceenv(.*)"
+    line: ". confluenceenv.sh"
+    insertafter: EOF

@@ -1,0 +1,45 @@
+---
+- name: Configure JAVA_HOME for Confluence application
+  template:
+    src: usr/local/confluence/setenv.sh.j2
+    dest: "{{ confluence_installation_instance_directory }}/bin/setenv.sh"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+  - restart confluence
+
+- name: Configure CONF_USER for Confluence application
+  template:
+    src: usr/local/confluence/user.sh.j2
+    dest: "{{ confluence_installation_instance_directory }}/bin/user.sh"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+  - restart confluence
+
+- name: Configure CONF_HOME for Confluence application
+  template:
+    src: usr/local/confluence/confluence-init.properties.j2
+    dest: "{{ confluence_installation_instance_directory }}/confluence/WEB-INF/classes/confluence-init.properties"
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+  - restart confluence
+
+- name: Configure server.xml for Confluence application
+  template:
+    src: usr/local/confluence/server.xml.j2
+    dest: "{{ confluence_installation_instance_directory }}/conf/server.xml"
+    owner: root
+    group: root
+    mode: 0755
+  notify:
+  - restart confluence
+
+- name: Configure autostart for Confluence application
+  service:
+    name: "{{ confluence_service_name }}"
+    enabled: "{{ confluence_start_during_boot }}"

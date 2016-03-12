@@ -1,0 +1,3 @@
+---
+- fail: msg="This role requires 'confluence_config_jre_directory' to be set"
+  when: confluence_config_jre_directory is not defined

@@ -1,0 +1,13 @@
+---
+- name: Determine installation directory for Confluence {{ confluence_version }}
+  set_fact:
+    confluence_installation_instance_directory: "{{ confluence_installation_software_directory }}/atlassian-confluence-{{ confluence_version }}"
+
+- name: Check if Confluence {{ confluence_version }} is installed
+  stat:
+    path: "{{ confluence_installation_instance_directory }}"
+  register: st
+
+- name: Determine if Confluence {{ confluence_version }} must be installed
+  set_fact:
+    confluence_need_installation: "{{ not st.stat.exists and confluence_perform_installation }}"

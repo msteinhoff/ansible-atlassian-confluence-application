@@ -1,0 +1,34 @@
+---
+- name: Check required variables
+  include: check_variables.yml
+  tags:
+  - atlassian-confluence-application
+
+- name: Setup system environment for Confluence application
+  include: setup_environment.yml
+  tags:
+  - atlassian-confluence-application
+
+- name: Check state of Confluence installation and determine required actions
+  include: check_installation_state.yml
+  tags:
+  - atlassian-confluence-application
+
+- name: Download and install Confluence application
+  when: confluence_need_installation
+  include: download_and_install.yml
+  tags:
+  - atlassian-confluence-application
+
+- name: Configure Confluence application
+  include: configure.yml
+  tags:
+  - atlassian-confluence-application
+
+- name: Start Confluence application if required
+  when: confluence_need_installation and confluence_start_after_installation
+  service:
+    name: "{{ confluence_service_name }}"
+    state: started
+  tags:
+  - atlassian-confluence-application

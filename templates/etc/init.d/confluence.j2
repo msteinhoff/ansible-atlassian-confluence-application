@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# chkconfig: 2345 85 28
+# description: Initscript for Atlassian Confluence
+
+### BEGIN INIT INFO
+# Provides: $confluence
+# Required-Start: $local_fs $network $syslog mysqld
+# Required-Stop: $local_fs $syslog mysqld
+# Should-Start: $syslog
+# Should-Stop: $network $syslog
+# Short-Description: Start Confluence daemon at boot time
+# Description:       Start Confluence daemon at boot time
+### END INIT INFO
+
+# Confluence Linux service controller script
+cd "{{ confluence_installation_instance_directory }}/bin"
+
+case "$1" in
+    start)
+        ./start-confluence.sh
+        ;;
+    restart)
+        ./stop-confluence.sh
+        ./start-confluence.sh
+        ;;
+    stop)
+        ./stop-confluence.sh
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
+        ;;
+esac

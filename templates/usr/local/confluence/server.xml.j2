@@ -1,0 +1,39 @@
+#jinja2: lstrip_blocks: True, trim_blocks: True
+<Server port="8000" shutdown="SHUTDOWN" debug="0">
+  <Service name="Tomcat-Standalone">
+    <Engine name="Standalone" defaultHost="localhost" debug="0">
+      <Host name="localhost" debug="0" appBase="webapps" unpackWARs="true" autoDeploy="false">
+        <Context path="{{ confluence_config_context_path }}" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
+          <!-- Logger is deprecated in Tomcat 5.5. Logging configuration for Confluence is specified in confluence/WEB-INF/classes/log4j.properties -->
+          <Manager pathname="" />
+        </Context>
+      </Host>
+    </Engine>
+
+    {% for name, connector in confluence_config_tomcat_connectors.iteritems() %}
+    {% if connector.enabled %}
+    <!-- {{ name }} connector -->
+    <Connector
+      protocol="HTTP/1.1"
+      port="{{ connector.listening_port }}"
+
+      maxThreads="200"
+      minSpareThreads="10"
+      acceptCount="10"
+      connectionTimeout="20000"
+
+      enableLookups="false"
+      debug="0"
+      URIEncoding="UTF-8"
+
+      {% if connector.type == 'proxy' %}
+      scheme="https"
+      secure="true"
+      proxyName="{{ connector.proxied_hostname }}"
+      proxyPort="{{ connector.proxied_port }}"
+      {% endif %}
+    />
+    {% endif %}
+    {% endfor %}
+  </Service>
+</Server>

@@ -1,0 +1,6 @@
+---
+- name: restart confluence
+  when: confluence_restart_after_reconfiguration
+  service:
+    name: "{{ confluence_service_name }}"
+    state: restarted
