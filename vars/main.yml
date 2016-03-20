@@ -1,0 +1,2 @@
+---
+confluence_installation_instance_directory: "{{ confluence_config_software_directory }}/{{ confluence_installation_archive_name }}"

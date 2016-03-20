@@ -1,0 +1,9 @@
+---
+- name: Check if Confluence is installed
+  stat:
+    path: "{{ confluence_installation_instance_directory }}"
+  register: st
+
+- name: Determine if Confluence must be installed
+  set_fact:
+    confluence_need_installation: "{{ not st.stat.exists and confluence_perform_installation }}"

@@ -2,9 +2,6 @@ alias confluenceInstall="cd {{ confluence_installation_instance_directory }}"
 alias confluenceTomcatBin="cd {{ confluence_installation_instance_directory }}/bin"
 alias confluenceTomcatConf="cd {{ confluence_installation_instance_directory }}/conf"
 alias confluenceTomcatLog="cd {{ confluence_installation_instance_directory }}/logs"
-
-alias confluenceHome="cd {{ confluence_home_directory }}"
-alias confluenceLogs="cd {{ confluence_home_directory }}/logs"
-alias confluenceBackup="cd {{ confluence_backup_directory }}"
-
+alias confluenceHome="cd {{ confluence_config_home_directory }}"
+alias confluenceLogs="cd {{ confluence_config_home_directory }}/logs"
 cd {{ confluence_installation_instance_directory }}

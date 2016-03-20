@@ -31,7 +31,7 @@
   - { path: "{{ confluence_config_home_directory }}", owner: "{{ confluence_user_name }}", group: "{{ confluence_group_name }}", mode: '0700' }
 
 - name: Provide confluenceenv.sh script to simplify application administration
-  when: confluence_provide_root_environment
+  when: confluence_provide_root_environment == true
   template:
     src: root/confluenceenv.sh.j2
     dest: /root/confluenceenv.sh
@@ -40,7 +40,7 @@
     mode: 0644
 
 - name: Enable confluenceenv.sh script to simplify application administration
-  when: confluence_provide_root_environment
+  when: confluence_provide_root_environment == true
   lineinfile:
     state: present
     dest: /root/.bash_profile

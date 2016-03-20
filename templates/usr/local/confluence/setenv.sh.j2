@@ -41,7 +41,7 @@ CATALINA_OPTS="-XX:-PrintGCDetails -XX:+PrintGCTimeStamps -XX:-PrintTenuringDist
 CATALINA_OPTS="-Xloggc:$LOGBASEABS/logs/gc-`date +%F_%H-%M-%S`.log -XX:+UseGCLogFileRotation -XX:NumberOfGCLogFiles=5 -XX:GCLogFileSize=2M ${CATALINA_OPTS}"
 CATALINA_OPTS="-Djava.awt.headless=true ${CATALINA_OPTS}"
 CATALINA_OPTS="-Datlassian.plugins.enable.wait=300 ${CATALINA_OPTS}"
-CATALINA_OPTS="-Xms{{ confluence_config_jvm_heap_size | default(2048m) }} -Xmx{{ confluence_config_jvm_heap_size | default(2048m) }} -XX:+UseG1GC ${CATALINA_OPTS}"
+CATALINA_OPTS="-Xms{{ confluence_config_jvm_heap_size }} -Xmx{{ confluence_config_jvm_heap_size }} -XX:+UseG1GC ${CATALINA_OPTS}"
 {% if confluence_config_jvm_opts %}CATALINA_OPTS="{{ confluence_config_jvm_opts }} ${CATALINA_OPTS}"{% endif %}
 
 export CATALINA_OPTS

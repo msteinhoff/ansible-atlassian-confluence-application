@@ -1,24 +1,23 @@
----
+2---
 confluence_user_name: confluence
 confluence_group_name: confluence
 confluence_service_name: confluence
 confluence_perform_installation: false
 confluence_start_after_installation: false
 confluence_provide_root_environment: false
-confluence_start_during_boot: false
-confluence_restart_after_reconfiguration: false
+confluence_start_on_boot: false
 
-confluence_installation_version: 5.9.5
-confluence_installation_archive_url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-{{ confluence_installation_version }}.tar.gz
+confluence_installation_archive_url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.9.5.tar.gz
 confluence_installation_archive_checksum: sha1:4c8e877122686d138bf5588ae3ca8d53ead70030
-confluence_installation_jdbc_driver_jar_path: ''
+confluence_installation_archive_name: atlassian-confluence-5.9.5
+confluence_installation_jdbc_driver_jar_source_path: ""
 
-confluence_config_jre_directory: ''
+confluence_config_jre_directory: ""
 confluence_config_software_directory: /opt/atlassian/confluence
 confluence_config_home_directory: /var/atlassian/application-data/confluence
-confluence_config_jvm_heap_size: 2048m
-confluence_config_jvm_opts: ''
-confluence_config_tomcat_context_path: ''
+confluence_config_jvm_heap_size: 1024m
+confluence_config_jvm_opts: ""
+confluence_config_tomcat_context_path: ""
 confluence_config_tomcat_connectors:
     standalone:
         enabled: true

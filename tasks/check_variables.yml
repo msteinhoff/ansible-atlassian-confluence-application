@@ -1,3 +1,24 @@
 ---
-- fail: msg="This role requires 'confluence_config_jre_directory' to be set"
-  when: confluence_config_jre_directory is not defined
+- name: Check if required variables are defined
+  fail:
+    msg: "This role requires '{{ item }}' to be set"
+  when: "{{ item }} is not defined"
+  with_items:
+  - confluence_user_name
+  - confluence_group_name
+  - confluence_service_name
+  - confluence_perform_installation
+  - confluence_start_after_installation
+  - confluence_provide_root_environment
+  - confluence_start_on_boot
+  - confluence_installation_archive_url
+  - confluence_installation_archive_checksum
+  - confluence_installation_archive_name
+  - confluence_installation_jdbc_driver_jar_source_path
+  - confluence_config_jre_directory
+  - confluence_config_software_directory
+  - confluence_config_home_directory
+  - confluence_config_jvm_heap_size
+  - confluence_config_jvm_opts
+  - confluence_config_tomcat_context_path
+  - confluence_config_tomcat_connectors

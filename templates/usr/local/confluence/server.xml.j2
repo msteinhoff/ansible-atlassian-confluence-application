@@ -3,7 +3,7 @@
   <Service name="Tomcat-Standalone">
     <Engine name="Standalone" defaultHost="localhost" debug="0">
       <Host name="localhost" debug="0" appBase="webapps" unpackWARs="true" autoDeploy="false">
-        <Context path="{{ confluence_config_context_path }}" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
+        <Context path="{{ confluence_config_tomcat_context_path }}" docBase="../confluence" debug="0" reloadable="false" useHttpOnly="true">
           <!-- Logger is deprecated in Tomcat 5.5. Logging configuration for Confluence is specified in confluence/WEB-INF/classes/log4j.properties -->
           <Manager pathname="" />
         </Context>

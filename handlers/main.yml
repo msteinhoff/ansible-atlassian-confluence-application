@@ -1,6 +1,12 @@
 ---
+- name: start confluence
+  when: confluence_need_installation and confluence_start_after_installation
+  service:
+    name: "{{ confluence_service_name }}"
+    state: started
+
 - name: restart confluence
-  when: confluence_restart_after_reconfiguration
+  when: not confluence_need_installation
   service:
     name: "{{ confluence_service_name }}"
     state: restarted
