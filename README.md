@@ -1,4 +1,4 @@
-# atlassian-atlassian-confluence-application
+# ansible-atlassian-confluence-application
 
 Ansible role which installs and configures an Atlassian Confluence instance.
 

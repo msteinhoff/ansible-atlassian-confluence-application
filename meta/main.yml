@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: Mario Steinhoff
-  description: Installs and configures a Atlassian Confluence instance.
+  description: Installs and configures an Atlassian Confluence instance.
   company: catapullt GmbH & Co. KG
   license: MPLv2
   min_ansible_version: 20
