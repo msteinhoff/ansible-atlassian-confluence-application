@@ -59,29 +59,29 @@
     - "{{ confluence_installation_instance_directory }}/temp"
     - "{{ confluence_installation_instance_directory }}/work"
 
-- name: Configure Java for Confluence application
-  template:
-    src: usr/local/confluence/setenv.sh.j2
-    dest: "{{ confluence_installation_instance_directory }}/bin/setenv.sh"
-    owner: root
-    group: root
-    mode: 0644
+  - name: Configure Java for Confluence application
+    template:
+      src: usr/local/confluence/setenv.sh.j2
+      dest: "{{ confluence_installation_instance_directory }}/bin/setenv.sh"
+      owner: root
+      group: root
+      mode: 0644
 
-- name: Configure CONF_USER for Confluence application
-  template:
-    src: usr/local/confluence/user.sh.j2
-    dest: "{{ confluence_installation_instance_directory }}/bin/user.sh"
-    owner: root
-    group: root
-    mode: 0644
+  - name: Configure CONF_USER for Confluence application
+    template:
+      src: usr/local/confluence/user.sh.j2
+      dest: "{{ confluence_installation_instance_directory }}/bin/user.sh"
+      owner: root
+      group: root
+      mode: 0644
 
-- name: Configure CONF_HOME for Confluence application
-  template:
-    src: usr/local/confluence/confluence-init.properties.j2
-    dest: "{{ confluence_installation_instance_directory }}/confluence/WEB-INF/classes/confluence-init.properties"
-    owner: root
-    group: root
-    mode: 0644
+  - name: Configure CONF_HOME for Confluence application
+    template:
+      src: usr/local/confluence/confluence-init.properties.j2
+      dest: "{{ confluence_installation_instance_directory }}/confluence/WEB-INF/classes/confluence-init.properties"
+      owner: root
+      group: root
+      mode: 0644
 
   - name: Install init script for Confluence application
     template:
