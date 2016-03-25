@@ -1,12 +1,12 @@
-2---
+---
 confluence_user_name: confluence
 confluence_group_name: confluence
 confluence_service_name: confluence
-confluence_perform_installation: false
-confluence_start_after_installation: false
 confluence_provide_root_environment: false
 confluence_start_on_boot: false
 
+confluence_perform_installation: false
+confluence_start_after_installation: false
 confluence_installation_archive_url: https://www.atlassian.com/software/confluence/downloads/binary/atlassian-confluence-5.9.5.tar.gz
 confluence_installation_archive_checksum: sha1:4c8e877122686d138bf5588ae3ca8d53ead70030
 confluence_installation_archive_name: atlassian-confluence-5.9.5
