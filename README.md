@@ -117,8 +117,8 @@ Path to a directory where the Confluence instance should be installed.
 
     confluence_installation_jdbc_driver_jar_source_path: (empty)
 
-Optional path to a JDBC driver jar file that will be copied into the Confluence
-instance lib directory.
+Optional path to a JDBC driver jar file on the control machine that will be
+copied into the Confluence instance lib directory on the remote machine.
 
 ## Configuration variables
 
